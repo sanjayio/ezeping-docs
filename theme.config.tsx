@@ -2,16 +2,16 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>ezePing Documentation</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://www.ezeping.com',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/TwpxS4v3',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: '',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'ezePing Documentation',
   },
 }
 
