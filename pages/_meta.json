@@ -2,14 +2,12 @@
   "index": "Introduction",
   "another": "Another Page",
   "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
-    "type": "page"
-  },
-  "contact": {
-    "title": "Contact ↗",
+  "contact": "Contact",
+  "about": "About",
+  "ezePing": {
+    "title": "Back to ezePing ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://www.ezeping.com",
     "newWindow": true
   }
 }
