@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/TwpxS4v3',
   },
-  docsRepositoryBase: '',
+  docsRepositoryBase: 'https://docs.ezeping.com',
   footer: {
     text: 'ezePing Documentation',
   },
