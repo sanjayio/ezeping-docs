@@ -1,0 +1,63 @@
+# Kotlin (using OkHttp library)
+
+## Prerequisites
+
+- **ezePing API Key**, available instantly after creating an account. You can copy it from [here](https://www.ezeping.com/dashboard/api-key).
+- **Event Category Name** is the category to which you want to send this event. If you haven't created an event category yet, you can create a new category [here](https://www.ezeping.com/dashboard). 
+
+## Payload
+
+You can send any payload, as long as it is in a valid JSON format.
+
+```json filename="json" copy
+'fields': {
+  'amount': 50,
+  'plan': 'PRO',
+  'email': 'user@email.com'
+}
+```
+
+## Installation
+
+```kotlin filename="Kotlin" copy
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+
+val url = "https://www.ezeping.com/api/v1/events"
+val client = OkHttpClient()
+
+val data = JSONObject().apply {
+    put("category", "<YOUR_CATEGORY_NAME>")
+    put("fields", JSONObject().apply {
+        put("field1", "value1")  // For example, user ID
+        put("field2", "value2")  // For example, user email
+    })
+}
+
+val requestBody = data.toString().toRequestBody("application/json".toMediaType())
+
+val request = Request.Builder()
+    .url(url)
+    .post(requestBody)
+    .addHeader("Authorization", "Bearer <YOUR_API_KEY>")
+    .addHeader("Content-Type", "application/json")
+    .build()
+
+client.newCall(request).enqueue(object : Callback {
+    override fun onFailure(call: Call, e: IOException) {
+        println("Request failed with error: $e")
+    }
+
+    override fun onResponse(call: Call, response: Response) {
+        response.use {
+            if (!response.isSuccessful) {
+                println("Request failed with status: ${response.code}")
+            } else {
+                println("Response: ${response.body?.string()}")
+            }
+        }
+    }
+})
+```

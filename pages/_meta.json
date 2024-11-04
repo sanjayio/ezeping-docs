@@ -1,9 +1,8 @@
 {
   "index": "Introduction",
   "installation": "Installation",
-  "advanced": "Advanced (A Folder)",
+  "integrations": "Integrations",
   "contact": "Contact",
-  "about": "About",
   "ezePing": {
     "title": "Back to ezePing ↗",
     "type": "page",

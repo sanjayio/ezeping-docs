@@ -1,0 +1,71 @@
+# Go (using net/http and encoding/json)
+
+## Prerequisites
+
+- **ezePing API Key**, available instantly after creating an account. You can copy it from [here](https://www.ezeping.com/dashboard/api-key).
+- **Event Category Name** is the category to which you want to send this event. If you haven't created an event category yet, you can create a new category [here](https://www.ezeping.com/dashboard). 
+
+## Payload
+
+You can send any payload, as long as it is in a valid JSON format.
+
+```json filename="json" copy
+'fields': {
+  'amount': 50,
+  'plan': 'PRO',
+  'email': 'user@email.com'
+}
+```
+
+## Installation
+
+```go filename="go" copy
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://www.ezeping.com/api/v1/events"
+    data := map[string]interface{}{
+        "category": "<YOUR_CATEGORY_NAME>",
+        "fields": map[string]string{
+            "field1": "value1",  // For example, user ID
+            "field2": "value2",  // For example, user email
+        },
+    }
+
+    jsonData, err := json.Marshal(data)
+    if err != nil {
+        fmt.Println("Failed to encode JSON:", err)
+        return
+    }
+
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        fmt.Println("Request creation failed:", err)
+        return
+    }
+
+    req.Header.Set("Authorization", "Bearer <YOUR_API_KEY>")
+    req.Header.Set("Content-Type", "application/json")
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println("Request failed:", err)
+        return
+    }
+    defer resp.Body.Close()
+
+    if resp.StatusCode == http.StatusOK {
+        fmt.Println("Request was successful")
+    } else {
+        fmt.Printf("Request failed with status: %s\n", resp.Status)
+    }
+}
+```

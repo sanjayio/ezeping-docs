@@ -1,0 +1,64 @@
+# C# (using HttpClient)
+
+## Prerequisites
+
+- **ezePing API Key**, available instantly after creating an account. You can copy it from [here](https://www.ezeping.com/dashboard/api-key).
+- **Event Category Name** is the category to which you want to send this event. If you haven't created an event category yet, you can create a new category [here](https://www.ezeping.com/dashboard). 
+
+## Payload
+
+You can send any payload, as long as it is in a valid JSON format.
+
+```json filename="json" copy
+'fields': {
+  'amount': 50,
+  'plan': 'PRO',
+  'email': 'user@email.com'
+}
+```
+
+## Installation
+
+```cs filename="C#" copy
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+public class Program
+{
+    public static async Task Main()
+    {
+        var url = "https://www.ezeping.com/api/v1/events";
+        var client = new HttpClient();
+
+        var data = new
+        {
+            category = "<YOUR_CATEGORY_NAME>",
+            fields = new
+            {
+                field1 = "value1",  // For example, user ID
+                field2 = "value2"   // For example, user email
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(data);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        client.DefaultRequestHeaders.Add("Authorization", "Bearer <YOUR_API_KEY>");
+
+        var response = await client.PostAsync(url, content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseData = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Request was successful: " + responseData);
+        }
+        else
+        {
+            Console.WriteLine("Request failed with status: " + response.StatusCode);
+        }
+    }
+}
+```

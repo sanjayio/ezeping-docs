@@ -1,0 +1,72 @@
+# Typescript
+
+## Prerequisites
+
+- **ezePing API Key**, available instantly after creating an account. You can copy it from [here](https://www.ezeping.com/dashboard/api-key).
+- **Event Category Name** is the category to which you want to send this event. If you haven't created an event category yet, you can create a new category [here](https://www.ezeping.com/dashboard). 
+
+## Payload
+
+You can send any payload, as long as it is in a valid JSON format.
+
+```json filename="json" copy
+'fields': {
+  'amount': 50,
+  'plan': 'PRO',
+  'email': 'user@email.com'
+}
+```
+
+## Installation
+
+```ts filename="Typescript" copy
+type EventData = {
+  category: string;
+  fields: {
+    field1: string;  // For example, user ID
+    field2: string;  // For example, user email
+  };
+};
+
+type ApiResponse = {
+  success: boolean;
+  message?: string;
+  data?: any;
+};
+
+const url = 'https://www.ezeping.com/api/v1/events';
+const apiKey = '<YOUR_API_KEY>';
+
+const data: EventData = {
+  category: '<YOUR_CATEGORY_NAME>',
+  fields: {
+    field1: 'value1',  // Replace with actual user ID
+    field2: 'value2'   // Replace with actual user email
+  }
+};
+
+async function sendEvent(): Promise<void> {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      const responseData: ApiResponse = await response.json();
+      console.log("Request was successful:", responseData);
+    } else {
+      console.error("Request failed with status:", response.status, await response.text());
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+sendEvent();
+
+```
