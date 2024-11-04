@@ -1,0 +1,11 @@
+{
+  "python": "Python",
+  "javascript": "Javascript",
+  "ruby": "Ruby",
+  "c-sharp": "C#",
+  "go": "Golang",
+  "kotlin": "Kotlin",
+  "typescript": "Typescript",
+  "rust": "Rust",
+  "swift": "Swift"
+}
